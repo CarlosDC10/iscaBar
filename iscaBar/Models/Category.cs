@@ -17,9 +17,9 @@ namespace iscaBar.Models
         public string Name { get { return name; } set { name = value; OnPropertyChanged(); } }
         private string description;
         public string Description { get { return description; } set { description = value; OnPropertyChanged(); } }
-        private List<Category> subcategories;
+        private List<int> subcategories;
         [OneToMany]
-        public List<Category> Subcategories { get { return subcategories; } set { subcategories = value; OnPropertyChanged(); } }
+        public List<int> Subcategories { get { return subcategories; } set { subcategories = value; OnPropertyChanged(); } }
         private Category catFather;
         private int catFatherId;
         [ForeignKey(typeof(int))]
@@ -27,12 +27,12 @@ namespace iscaBar.Models
         [ManyToOne]
         public Category CatFather { get { return catFather; } set { catFather = value; OnPropertyChanged(); } }
 
-        private List<Product> products;
+        private List<int> products;
         [ManyToMany(typeof(CategoryProduct))]
-        public List<Product> Products { get { return products; } set { products = value; OnPropertyChanged(); } }
+        public List<int> Products { get { return products; } set { products = value; OnPropertyChanged(); } }
         public Category()
         {
-            Subcategories = new List<Category>();
+            Subcategories = new List<int>();
         }
     }
 }

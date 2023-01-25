@@ -20,10 +20,17 @@ namespace iscaBar.Views
         public ListCategoriesVM vm;
         public ListCategoryView()
         {
+            vm = new ListCategoriesVM();
+            InitializeComponent();
+            CategoryList.ItemsSource = vm.Items;
+        }
+
+        public ListCategoryView(Category cat)
+        {
             /*Items.Add("Starters");
             Items.Add("Firsts");
             Items.Add("Seconds");*/
-            vm = new ListCategoriesVM();
+            vm = new ListCategoriesVM(cat);
             InitializeComponent();
             CategoryList.ItemsSource = vm.Items;
         }
@@ -31,11 +38,17 @@ namespace iscaBar.Views
         async void ProductList(object sender, EventArgs e)
         {
             Category cat = (Category)CategoryList.SelectedItem;
-
             if (cat == null)
                 return;
 
-            await Navigation.PushAsync(new ListProductsView(cat));
+            if (cat.Subcategories.Count > 0)
+            {
+                await Navigation.PushAsync(new ListCategoryView(cat));
+            }
+            else
+            {
+                await Navigation.PushAsync(new ListProductsView(cat));
+            }
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }

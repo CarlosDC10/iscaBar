@@ -3,27 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="iscaBar.Views.ListProductsView">
     <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
+            ItemsSource="{Binding ListaProductos}"
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding Description}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-                    </Grid>
+                    <StackLayout Spacing="5" Padding="10">
+                        <Label Text="{Binding Name}" FontSize="Small"/>
+                        <Label Text="{Binding Description}" FontSize="Small"/>
+                    </StackLayout>
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
