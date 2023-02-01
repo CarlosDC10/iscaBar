@@ -20,7 +20,7 @@ namespace iscaBar.Models
         public int Id { get { return id; } set { id = value; OnPropertyChanged(); } }
         public string Name { get { return name; } set { name = value; OnPropertyChanged(); } }
         public string Observations { get { return observations; } set { observations = value; OnPropertyChanged(); } }
-        public bool Guten { get { return gluten; } set { gluten = value; OnPropertyChanged(); } }
+        public bool Gluten { get { return gluten; } set { gluten = value; OnPropertyChanged(); } }
         [ManyToMany(typeof(ProdIngre))]
         public List<Product> Products { get { return products; } set { products = value; OnPropertyChanged(); } }
     }

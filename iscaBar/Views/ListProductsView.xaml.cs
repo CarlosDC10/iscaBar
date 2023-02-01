@@ -14,9 +14,7 @@ namespace iscaBar.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListProductsView : ContentPage
-    {
-        private ObservableCollection<Item> items;
-        public ObservableCollection<Item> Items { get { return items; } set { items = value; OnPropertyChanged(); } }
+    { 
         private ListProductsVM listProductsVM;
         public ListProductsVM ListProductsVM { get { return listProductsVM; } set { listProductsVM = value; OnPropertyChanged(); } }
 

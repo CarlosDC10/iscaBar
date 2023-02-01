@@ -25,31 +25,8 @@ namespace iscaBar.ViewModels
         }
         public ListProductsVM(Category fatherCategory)
         {
-            category = fatherCategory;
-            cargarDatos();
+            Category = fatherCategory;
+            ListaProductos = new ObservableCollection<Product>(Category.Products);
         }
-        private async Task cargarDatos()
-        {
-            ListaProductos = new ObservableCollection<Product>();
-
-            List<Product> lproductos = await ProductSDAO.GetAllAsync();
-
-            foreach (int id in category.Products)
-            {
-                foreach (Product product in lproductos)
-                {
-                    if (id == product.Id)
-                    {
-                        ListaProductos.Add(product);
-                        break;
-                    }
-                }
-            }
-
-
-
-        }
-
-
     }
 }

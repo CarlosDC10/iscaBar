@@ -1,6 +1,7 @@
 ﻿using iscaBar.Helpers;
 using iscaBar.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -23,6 +24,37 @@ namespace iscaBar.DAO.Servidor
                 string content = await response.Result.Content.ReadAsStringAsync();
                 List<Ingredient> list = JsonConvert.DeserializeObject<List<Ingredient>>(content);
                 return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static async Task<Ingredient> GetAsync(int ingredient)
+        {
+            string URL = Constant.UrlApi + "bar_app/getAllIngredient/"+ingredient;
+            Uri URI = new Uri(URL);
+            HttpClient client = new HttpClient();
+            Task<HttpResponseMessage> response = client.GetAsync(URI);
+            Ingredient ing = new Ingredient();
+            try
+            {
+                response.Result.EnsureSuccessStatusCode();
+                string content = await response.Result.Content.ReadAsStringAsync();
+                JArray array = JsonConvert.DeserializeObject<JArray>(content);
+                foreach (JObject jObject in array)
+                {
+                    int id = int.Parse(jObject.GetValue("id").ToString());
+                    string name = jObject.GetValue("name").ToString();
+                    bool gluten = bool.Parse(jObject.GetValue("gluten").ToString());
+                    string obs = jObject.GetValue("observations").ToString();
+                    ing.Gluten = gluten;
+                    ing.Id = id;
+                    ing.Name = name;
+                    ing.Observations = obs;
+                }
+                return ing;
             }
             catch (Exception ex)
             {

@@ -41,7 +41,7 @@ namespace iscaBar.Views
             if (cat == null)
                 return;
 
-            if (cat.Subcategories.Count > 0)
+            if (cat.Child_ids.Count > 0)
             {
                 await Navigation.PushAsync(new ListCategoryView(cat));
             }
