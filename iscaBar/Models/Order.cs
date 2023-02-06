@@ -16,7 +16,7 @@ namespace iscaBar.Models
         private string waiter;
         private string state;
         private decimal total;
-        private List<OrderLine> orders;
+        private List<OrderLine> orderLine;
 
         [PrimaryKey,AutoIncrement]
         public int Id { get { return id; } set { id = value; OnPropertyChanged(); } }
@@ -26,7 +26,7 @@ namespace iscaBar.Models
         public string Waiter { get { return waiter; } set { waiter = value; OnPropertyChanged(); } }
         public string State { get { return state; } set { state = value; OnPropertyChanged(); } }
         public decimal Total { get { return total; } set { total = value; OnPropertyChanged(); } }
-        public List<OrderLine> Orders { get { return orders; } set { orders = value; OnPropertyChanged(); } }
+        public List<OrderLine> OrderLine { get { return orderLine; } set { orderLine = value; OnPropertyChanged(); } }
 
     }
 }

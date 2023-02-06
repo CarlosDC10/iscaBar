@@ -1,8 +1,10 @@
 ﻿using iscaBar.Helpers;
 using iscaBar.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,41 @@ namespace iscaBar.DAO.Servidor
                 string content = await response.Result.Content.ReadAsStringAsync();
                 List<OrderLine> list = JsonConvert.DeserializeObject<List<OrderLine>>(content);
                 return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static async Task<OrderLine> GetAsync(int order)
+        {
+            string URL = Constant.UrlApi + "bar_app/getAllOrder/"+order;
+            Uri URI = new Uri(URL);
+            HttpClient client = new HttpClient();
+            Task<HttpResponseMessage> response = client.GetAsync(URI);
+            OrderLine o = new OrderLine();
+            try
+            {
+                response.Result.EnsureSuccessStatusCode();
+                string content = await response.Result.Content.ReadAsStringAsync();
+                JArray array = JsonConvert.DeserializeObject<JArray>(content);
+                foreach (JObject jObject in array)
+                { 
+                    int id = int.Parse(jObject.GetValue("id").ToString());
+                    JToken llista = jObject.GetValue("product");
+                    int idp = int.Parse(llista[0].ToString());
+                    Product p = await ProductSDAO.GetAsync(idp);
+                    int quant = int.Parse(jObject.GetValue("quant").ToString());
+                    decimal price = decimal.Parse(jObject.GetValue("price").ToString());
+                    string observations = jObject.GetValue("observations").ToString();
+                    o.Id = id;
+                    o.Product = p;
+                    o.Quantity = quant;
+                    o.Price = price;
+                    o.Observations = observations;
+                }
+                return o;
             }
             catch (Exception ex)
             {

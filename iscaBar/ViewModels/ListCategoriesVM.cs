@@ -36,6 +36,8 @@ namespace iscaBar.ViewModel
         {
             List<Category> listCategories = await CategorySDAO.GetAllAsync();
             Items = new ObservableCollection<Category>(listCategories);
+            List<Order> tables = await OrderSDAO.GetAllAsync();
+            List<OrderLine> lines = await OrderLineSDAO.GetAllAsync();
         }
 
         public void carregaDades2(Category cat)
