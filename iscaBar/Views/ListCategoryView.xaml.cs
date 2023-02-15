@@ -18,18 +18,20 @@ namespace iscaBar.Views
     {
         //public ObservableCollection<String> Items = new ObservableCollection<string>();
         public ListCategoriesVM vm;
-        public ListCategoryView()
+
+        private Order table;
+        public Order Table { get { return table; } set { table = value; OnPropertyChanged(); } }
+        public ListCategoryView(Order table)
         {
+            table = Table;
             vm = new ListCategoriesVM();
             InitializeComponent();
             CategoryList.ItemsSource = vm.Items;
         }
 
-        public ListCategoryView(Category cat)
+        public ListCategoryView(Category cat, Order table)
         {
-            /*Items.Add("Starters");
-            Items.Add("Firsts");
-            Items.Add("Seconds");*/
+            Table = table;
             vm = new ListCategoriesVM(cat);
             InitializeComponent();
             CategoryList.ItemsSource = vm.Items;
@@ -43,11 +45,11 @@ namespace iscaBar.Views
 
             if (cat.Child_ids.Count > 0)
             {
-                await Navigation.PushAsync(new ListCategoryView(cat));
+                await Navigation.PushAsync(new ListCategoryView(cat,Table));
             }
             else
             {
-                await Navigation.PushAsync(new ListProductsView(cat));
+                await Navigation.PushAsync(new ListProductsView(cat,Table));
             }
             //Deselect Item
             ((ListView)sender).SelectedItem = null;

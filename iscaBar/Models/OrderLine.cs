@@ -15,6 +15,7 @@ namespace iscaBar.Models
         private int quantity;
         private decimal price;
         private string observations;
+        private Order table;
 
         [PrimaryKey,AutoIncrement]
         public int Id { get { return id; } set { id = value; OnPropertyChanged(); } }
@@ -23,5 +24,6 @@ namespace iscaBar.Models
         public int Quantity { get { return quantity; } set { quantity = value; OnPropertyChanged(); } }
         public decimal Price { get { return price; } set { price = value; OnPropertyChanged(); } }
         public string Observations { get { return observations; } set { observations = value;OnPropertyChanged(); } }
+        public Order Table { get { return table; } set { table = value; OnPropertyChanged(); } }
     }
 }

@@ -88,20 +88,36 @@ namespace iscaBar.DAO.Servidor
             }
         }
 
-        public static async Task<String> AddAsync(OrderLine ord)
+        public static async Task<bool> AddAsync(OrderLine order)
         {
             string URL = Constant.UrlApi + "bar_app/addOrder";
             Uri URI = new Uri(URL);
             HttpClient client = new HttpClient();
-            var js = JsonConvert.SerializeObject(ord);
-            var httpContent = new StringContent(js, Encoding.UTF8, "application/json");
+            var dic = new { numTable = order.Table, product = order.Product.Id, quant = order.Quantity };
+            string json = JsonConvert.SerializeObject(dic);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             Task<HttpResponseMessage> response = client.PutAsync(URI, httpContent);
             try
             {
                 response.Result.EnsureSuccessStatusCode();
                 string content = await response.Result.Content.ReadAsStringAsync();
-                String list = JsonConvert.DeserializeObject<String>(content);
-                return list;
+                JArray array = JsonConvert.DeserializeObject<JArray>(content);
+                bool resu = false;
+                foreach (JObject jObject in array)
+                {
+                    String status = jObject.GetValue("status").ToString();
+                    if(status == "201")
+                    {
+                        resu = true;
+                        break;
+                    }
+                    else
+                    {
+                        resu = false;
+                        break;
+                    }
+                }
+                return resu;
             }
             catch (Exception ex)
             {

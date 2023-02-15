@@ -1,4 +1,5 @@
 ﻿using iscaBar.DAO.Servidor;
+using iscaBar.Models;
 using iscaBar.Services;
 using iscaBar.Views;
 using System;
@@ -13,7 +14,7 @@ namespace iscaBar
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new ListCategoryView());
+            MainPage = new NavigationPage(new ListCategoryView(new Order())) ;
         }
 
         protected override void OnStart()

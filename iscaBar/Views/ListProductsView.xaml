@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="iscaBar.Views.ListProductsView">
-    <ListView x:Name="MyListView"
+    <ListView x:Name="ProdList"
             ItemsSource="{Binding ListaProductos}"
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">

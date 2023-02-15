@@ -13,73 +13,71 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackLayout Grid.Row="0" Grid.Column="0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="150"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="500"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Text="Id:"></Label>
-                        <Entry Grid.Row="0" Grid.Column="1" x:Name="xid" Text="{Binding Order.Id}"></Entry>
-                        <Label Grid.Row="1" Grid.Column="0" Text="Name:"></Label>
-                        <Entry Grid.Row="1" Grid.Column="1" x:Name="xname" Text="{Binding Order.Name}"></Entry>
-                        <Label Grid.Row="2" Grid.Column="0" Text="Gluten:"></Label>
-                        <Entry Grid.Row="2" Grid.Column="1" x:Name="xgluten" Text="{Binding Order.Gluten}"></Entry>
-                        <Label Grid.Row="3" Grid.Column="0" Text="Observations:"></Label>
-                        <Entry Grid.Row="3" Grid.Column="1" x:Name="xobservations"  Text="{Binding Order.Observations}"></Entry>
-                    </Grid>
-                </StackLayout>
-                <StackLayout Grid.Row="1" Grid.Column="0">
-                    <Label Text="Ingredients: "></Label>
-                    <ListView x:Name="MyListIngredients"
-                        ItemsSource="{Binding Ingredients}"
-                        ItemTapped="Handle_ItemTapped"
-                        CachingStrategy="RecycleElement">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <ViewCell.ContextActions>
-                                        <MenuItem Text="Context Menu Option" />
-                                    </ViewCell.ContextActions>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="35"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <CheckBox Grid.Row="0" Grid.Column="0"/>
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Id}" Style="{DynamicResource ListItemTextStyle}" />
-                                        <Label Grid.Row="0" Grid.Column="2" Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Grid.Row="6" Grid.Column="0" >
-                    <Button Text="Add" Clicked="ClickedAdd" HorizontalOptions="FillAndExpand"></Button>
-                    <Button Text="Delete" Clicked="ClickedDelete" HorizontalOptions="FillAndExpand"></Button>
-                </StackLayout>
+                <Label Text="Name:" Grid.Row="0" Grid.Column="0"></Label>
+                <Label Text="{Binding Product.Name}" Grid.Row="0" Grid.Column="1"></Label>
+                <Label Text="Quantity: " Grid.Row="1" Grid.Column="0"></Label>
+                <Entry Text="1" Grid.Row="1" Grid.Column="1" x:Name="QuantityEntry"></Entry>
             </Grid>
-            <StackLayout Orientation="Horizontal" >
-                <Button Text="Guardar" Clicked="ClickedGuardar" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
+            <Label Text="Ingredients:"></Label>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="150"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListView x:Name="IngreList"
+                 ItemsSource="{Binding ProdIngre}" Grid.Row="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Row="0" Grid.Column="0" CheckedChanged="CheckDelete"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Id}" Style="{DynamicResource ListItemTextStyle}" />
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Delete ingredient" Grid.Row="1" Clicked="DeleteIngre" IsEnabled="False" x:Name="BotoDelete"></Button>
+                <Label Text="Add ingredients:" Grid.Row="2"></Label>
+                <ListView x:Name="AddIngreList"
+                 ItemsSource="{Binding Ingredients}" Grid.Row="3">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Row="0" Grid.Column="0" CheckedChanged="CheckAdd"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Id}" Style="{DynamicResource ListItemTextStyle}" />
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Add ingredient" Grid.Row="4" Clicked="AddIngre" IsEnabled="False" x:Name="BotoAdd"></Button>
+            </Grid>
+            <Label Text="Changes:"></Label>
+            <Entry Text="{Binding OrderLine.Observations}" x:Name="observationsEntry"></Entry>
+            <Button Text="Save" Clicked="Save"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
