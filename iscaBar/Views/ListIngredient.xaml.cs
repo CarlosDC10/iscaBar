@@ -1,4 +1,5 @@
 ﻿using iscaBar.Models;
+using iscaBar.Services;
 using iscaBar.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace iscaBar.Views
@@ -53,6 +55,7 @@ namespace iscaBar.Views
             }
 
             ListIngredientVM.save(s,quant);
+            PageStackService.Goto(new ListCategoryView(new Order()));
         }
 
         private void CheckDelete(object sender, CheckedChangedEventArgs e)

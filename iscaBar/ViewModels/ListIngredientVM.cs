@@ -144,6 +144,14 @@ namespace iscaBar.ViewModels
             OrderLine.Product = Product;
             OrderLine.Quantity = quant;
             OrderLine.Table = Table;
+            OrderLine.Price = Product.Price * quant;
+
+            OrderLine.Id = addApi(OrderLine).Result;
+        }
+
+        public async Task<int> addApi(OrderLine orderline)
+        {
+            return await OrderLineSDAO.AddAsync(OrderLine);
         }
     }
 }

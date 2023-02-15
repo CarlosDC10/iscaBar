@@ -88,12 +88,12 @@ namespace iscaBar.DAO.Servidor
             }
         }
 
-        public static async Task<bool> AddAsync(OrderLine order)
+        public static async Task<int> AddAsync(OrderLine order)
         {
             string URL = Constant.UrlApi + "bar_app/addOrder";
             Uri URI = new Uri(URL);
             HttpClient client = new HttpClient();
-            var dic = new { numTable = order.Table, product = order.Product.Id, quant = order.Quantity };
+            var dic = new { numTable = 42, product = order.Product.Id, quant = order.Quantity, observations = order.Observations };
             string json = JsonConvert.SerializeObject(dic);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             Task<HttpResponseMessage> response = client.PutAsync(URI, httpContent);
@@ -101,23 +101,14 @@ namespace iscaBar.DAO.Servidor
             {
                 response.Result.EnsureSuccessStatusCode();
                 string content = await response.Result.Content.ReadAsStringAsync();
-                JArray array = JsonConvert.DeserializeObject<JArray>(content);
-                bool resu = false;
-                foreach (JObject jObject in array)
+                JObject result = JsonConvert.DeserializeObject<JObject>(content);
+                int id = 0;
+                JToken status = result.GetValue("result");
+                if(status.Value<string>("status") == "201")
                 {
-                    String status = jObject.GetValue("status").ToString();
-                    if(status == "201")
-                    {
-                        resu = true;
-                        break;
-                    }
-                    else
-                    {
-                        resu = false;
-                        break;
-                    }
+                    id = status.Value<int>("id");
                 }
-                return resu;
+                return id;
             }
             catch (Exception ex)
             {
