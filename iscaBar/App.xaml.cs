@@ -14,7 +14,8 @@ namespace iscaBar
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new ListCategoryView(new Order())) ;
+            Order order = null;
+            MainPage = new NavigationPage(new ListOrdersView()) ;
         }
 
         protected override void OnStart()

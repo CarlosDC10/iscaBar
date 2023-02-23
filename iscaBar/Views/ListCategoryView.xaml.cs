@@ -23,7 +23,7 @@ namespace iscaBar.Views
         public Order Table { get { return table; } set { table = value; OnPropertyChanged(); } }
         public ListCategoryView(Order table)
         {
-            table = Table;
+            Table = table;
             vm = new ListCategoriesVM();
             InitializeComponent();
             CategoryList.ItemsSource = vm.Items;

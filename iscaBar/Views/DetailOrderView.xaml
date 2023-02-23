@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="iscaBar.Views.DetailOrderView"
+             Title="DetailOrderView">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Num:"></Label>
+                    <Entry Grid.Row="0" Grid.Column="1" x:Name="xnum" Text="{Binding Order.Num}"></Entry>
+                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Diners:"></Label>
+                    <Entry Grid.Row="1" Grid.Column="1" x:Name="xdiners" Text="{Binding Order.Diners}"></Entry>
+                    <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Waiter:"></Label>
+                    <Entry Grid.Row="2" Grid.Column="1" x:Name="xwaiter"  Text="{Binding Order.Waiter}"></Entry>
+                    <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Client:"></Label>
+                    <Entry Grid.Row="3" Grid.Column="1" x:Name="xclient"  Text="{Binding Order.Client}"></Entry>
+                    <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Total:"></Label>
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Order.Total}"></Label>
+                    <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="State:"></Label>
+                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding Order.State}"></Label>
+                    <Label Grid.Row="6" Text="Lines: "></Label>
+                    <StackLayout Grid.Row="7" Grid.RowSpan="10" Grid.Column="0" Grid.ColumnSpan="2" >
+                        <ListView x:Name="MyListView"
+                        ItemsSource="{Binding OrderLines}"
+                        ItemTapped="Handle_ItemTapped"
+                        CachingStrategy="RecycleElement">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="35"></RowDefinition>
+                                                <RowDefinition Height="35"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Row="0" Grid.Column="0" CheckedChanged="OnCheckBoxCheckedChanged" BindingContext="{Binding .}"/>
+                                            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Product.Name}" Style="{DynamicResource ListItemTextStyle}" />
+                                            <Label Grid.Row="0" Grid.Column="3" Text="{Binding Quantity}" Style="{DynamicResource ListItemTextStyle}" />
+                                            <Label Grid.Row="0" Grid.Column="4" Text="{Binding Price}" Style="{DynamicResource ListItemTextStyle}" />
+                                            <Label Grid.Row="0" Grid.Column="5" Text="{Binding Observations}" Style="{DynamicResource ListItemTextStyle}" />
+
+                                        </Grid>
+                                        
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </StackLayout>
+                    <StackLayout Grid.Row="7" Grid.Column="2" Orientation="Vertical" >
+                        <Button Text="AddLine" Clicked="ClickedAddLine" HorizontalOptions="FillAndExpand"></Button>
+                        <Button Text="DeleteLine" Clicked="ClickedDeleteLine" HorizontalOptions="FillAndExpand"></Button>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" >
+                <Button Text="Guardar" Clicked="ClickedGuardar" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,7 +94,7 @@ namespace iscaBar.DAO.Servidor
             string URL = Constant.UrlApi + "bar_app/addOrder";
             Uri URI = new Uri(URL);
             HttpClient client = new HttpClient();
-            var dic = new { numTable = 42, product = order.Product.Id, quant = order.Quantity, observations = order.Observations };
+            var dic = new { numTable = order.Table.Id, product = order.Product.Id, quant = order.Quantity, observations = order.Observations };
             string json = JsonConvert.SerializeObject(dic);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             Task<HttpResponseMessage> response = client.PutAsync(URI, httpContent);
@@ -116,20 +117,22 @@ namespace iscaBar.DAO.Servidor
             }
         }
 
-        public static async Task<String> DeleteAsync(OrderLine ord)
+        public static async Task<Boolean> DeleteAsync(int id)
         {
             string URL = Constant.UrlApi + "bar_app/deleteOrder";
             Uri URI = new Uri(URL);
             HttpClient client = new HttpClient();
-            var js = JsonConvert.SerializeObject(ord.Id);
-            var httpContent = new StringContent(js, Encoding.UTF8, "application/json");
-            Task<HttpResponseMessage> response = client.PutAsync(URI, httpContent);
+            var content = new StringContent(JsonConvert.SerializeObject(new { id }), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(URI, content);
+            String reponseContent = await response.Content.ReadAsStringAsync();
             try
             {
-                response.Result.EnsureSuccessStatusCode();
-                string content = await response.Result.Content.ReadAsStringAsync();
-                String list = JsonConvert.DeserializeObject<String>(content);
-                return list;
+                response.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {

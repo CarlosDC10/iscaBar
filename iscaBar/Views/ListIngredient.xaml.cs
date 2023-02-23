@@ -55,7 +55,7 @@ namespace iscaBar.Views
             }
 
             ListIngredientVM.save(s,quant);
-            PageStackService.Goto(new ListCategoryView(new Order()));
+            PageStackService.Goto(new ListOrdersView());
         }
 
         private void CheckDelete(object sender, CheckedChangedEventArgs e)
